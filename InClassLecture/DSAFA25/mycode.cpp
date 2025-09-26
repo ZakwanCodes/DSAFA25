@@ -10,34 +10,103 @@ struct student {
 
 }; */
 
+
+
 class Line {
+private:
 	//private by default if not written
 	float* length = NULL;
-	int size;
+	int size; 
 public:
 	Line(int count) {
 		cout << "Constructor is called" << endl; //when the object is created the constructor is called
 		size = count;
+		length = new float[size];
 	}
 	/*~Line() {
 		cout << "Destructor is called" << endl; //when the object goes out of scope the destructor is called
 	}*/
 
+	void setLength();
+
+	void printLength();
+
 	~Line();
 
-};
+}; 
+
+void Line::setLength() {
+	for (int i = 0; i < size; i++) {
+		length[i] = 2*i + (1 % size);
+
+	}
+}
+
+void Line::printLength() {
+	for (int i = 0; i < size; i++) {
+		cout << length[i] << " ";
+	}
+	cout << endl;
+}
 
 Line::~Line() {
 	cout << "Destructor is called" << endl; //calling a member function outside of the class by defining it in the class first then implementing it outside using the scoped operator
+	delete[] length;
 }
 
 
 
 //Difference between struct and class is that struct has only priv variables and class has public and private variables
+void fillArray(int* ptr, int size) {
+	for (int i = 0; i < size; i++) {
+		ptr[i] = i % size;
+	}
+}
 
+void printArray(int * ptr, int size) {
+	for (int i = 0; i < size; i++) {
+		cout << ptr[i] << " ";
+	}
+	cout << endl;
+}
+
+void increaseArraySize(int *&data, int size, int newsize) {
+	if (size < newsize) {
+		int* newarrayptr = new int[newsize];
+		copy(data, data+size, newarrayptr);
+		cout << "newarrayptr: " << newarrayptr << endl;
+		cout << "data(1): " << data << endl;
+		delete[] data;
+		data = newarrayptr;
+		cout << "data(2): " << data << endl;
+	}
+	else {
+		return;
+	}
+}
 int main() {
 
-	Line myline(5);
+	//Line myline(5);
+	//myline.setLength();
+	//myline.printLength();
+
+	int size; int newsize;
+	cout << "Enter array size: ";
+	cin >> size;
+	int* ptr = new int[size];
+	cout << "ptr: " << ptr << endl;
+	fillArray(ptr, size);
+	printArray(ptr, size);
+
+
+	cout << "Enter a new array size: ";
+	cin >> newsize;
+	increaseArraySize(ptr, size, newsize);
+	printArray(ptr, size);
+	fillArray(ptr, newsize);
+	printArray(ptr, newsize);
+
+	delete[] ptr;
 
 
 	//int* ptr = new int[10];
