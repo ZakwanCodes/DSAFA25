@@ -38,6 +38,7 @@ void::queue::priority_enqueue(int x, int p) {
 	node* curr = head;
 	node* prev = NULL;
 
+	//if theres no node in the list
 	if (head == NULL) { //the head has the max prioity in an empty list
 		head = temp;
 		temp->ptr = NULL;
@@ -57,22 +58,29 @@ void::queue::priority_enqueue(int x, int p) {
 
 	}
 
-	if (head->priority < temp->priority) { //and there are more than one nodes
-		temp->ptr = head;
-		head = temp;
-		return;
-	}
+	while (curr->ptr != NULL) {
+		//only one node (head node) is present in the list
+		if (head->priority < temp->priority) { //and there are more than one nodes
+			temp->ptr = head;
+			head = temp;
+			return;
+		}
 
-	//2 cases left, tempprior has lowest priority and temprior is in between two nodes
-	prev = curr;   //do the traversin here
-	curr = curr->ptr;
-	//addwhile loop around this and outside the while loop add the node
-	 if ((prev->priority > temp->priority) && (curr->priority < temp->priority)) {
-		//add the new node in between prev and curr
-		prev->ptr = temp;
-		temp->ptr = curr;
-		return;
+		//2 cases left, tempprior has lowest priority and temprior is in between two nodes
+		prev = curr;   //do the traversin here
+		curr = curr->ptr;
+		//addwhile loop around this and outside the while loop add the node
+		if ((prev->priority > temp->priority) && (curr->priority < temp->priority)) {
+			//add the new node in between prev and curr
+			prev->ptr = temp;
+			temp->ptr = curr;
+			return;
+		}
+		
 	}
+	//new node has the lowest priority (add at end of list)
+	curr->ptr = temp;
+	temp->ptr = NULL; //Not necessary 
 
 	//while (curr->ptr != NULL) {
 	//	curr = curr->ptr;
@@ -152,7 +160,7 @@ int main() {
 	myqueue.priority_enqueue(4, 12);
 	myqueue.display();
 	cout << "\n";
-	myqueue.priority_enqueue(5, 4);
+	myqueue.priority_enqueue(5, 5);
 	myqueue.display();
 	cout << "\n";
 	//myqueue.dequeue();
