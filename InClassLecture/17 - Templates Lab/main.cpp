@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 class x {
@@ -68,8 +69,10 @@ public:
 		}
 		return total;
 	}
-	void sort() {
-		for (int i = 0; i < items.size() - 1; i++) {
+	void sortt() {
+
+		sort(items.begin(), items.end());
+		/*for (int i = 0; i < items.size() - 1; i++) {
 			for (int j = 0; j < items.size() - 1; j++) {
 				if (items[j] > items[j + 1]) {
 					T temp = items[j];
@@ -77,7 +80,7 @@ public:
 					items[j + 1] = temp;
 				}
 			}
-		}
+		} */
 
 	}
 	double average() {
@@ -104,7 +107,7 @@ int main(){
 	cout << "Min Object: " << manager.min() << endl;
 	cout << "Sum: " << manager.sum() << endl;
 	
-	manager.sort();
+	manager.sortt();
 	manager.display();
 	cout << "Average: " << manager.average() << endl;
 
